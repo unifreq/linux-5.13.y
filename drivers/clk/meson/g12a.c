@@ -1603,7 +1603,7 @@ static struct clk_regmap g12b_cpub_clk_trace = {
 };
 
 static const struct pll_mult_range g12a_gp0_pll_mult_range = {
-	.min = 55,
+	.min = 125,
 	.max = 255,
 };
 
@@ -1783,7 +1783,7 @@ static struct clk_regmap g12a_hifi_pll_dco = {
 		},
 		.l = {
 			.reg_off = HHI_HIFI_PLL_CNTL0,
-			.shift   = 31,
+			.shift   = 30,
 			.width   = 1,
 		},
 		.rst = {
