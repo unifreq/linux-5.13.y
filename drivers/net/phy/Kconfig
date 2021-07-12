@@ -63,6 +63,13 @@ config SFP
 
 comment "MII PHY device drivers"
 
+config AC200_PHY
+	tristate "AC200 EPHY"
+	depends on NVMEM
+	depends on OF
+	help
+	  Fast ethernet PHY as found in X-Powers AC200 multi-function device.
+
 config AMD_PHY
 	tristate "AMD PHYs"
 	help
@@ -228,6 +235,12 @@ config MICROSEMI_PHY
 	select CRYPTO_LIB_AES if MACSEC
 	help
 	  Currently supports VSC8514, VSC8530, VSC8531, VSC8540 and VSC8541 PHYs
+
+config MOTORCOMM_PHY
+	tristate "Motorcomm PHYs"
+	help
+	  Enables support for Motorcomm network PHYs.
+	  Currently supports the YT8511 gigabit PHY.
 
 config NATIONAL_PHY
 	tristate "National Semiconductor PHYs"
