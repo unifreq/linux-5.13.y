@@ -31,9 +31,6 @@
 #include <net/netfilter/ipv4/nf_conntrack_ipv4.h>
 #include <net/netfilter/ipv6/nf_conntrack_ipv6.h>
 
-/* Do not check the TCP window for incoming packets  */
-static int nf_ct_tcp_no_window_check __read_mostly = 1;
-
   /* FIXME: Examine ipfilter's timeouts and conntrack transitions more
      closely.  They're more complex. --RR */
 
@@ -466,9 +463,6 @@ static bool tcp_in_window(const struct nf_conn *ct,
 	u16 win_raw;
 	s32 receiver_offset;
 	bool res, in_recv_win;
-
-	if (nf_ct_tcp_no_window_check)
-		return true;
 
 	/*
 	 * Get the required data from the packet.
@@ -1120,7 +1114,7 @@ int nf_conntrack_tcp_packet(struct nf_conn *ct,
 		 IP_CT_TCP_FLAG_DATA_UNACKNOWLEDGED &&
 		 timeouts[new_state] > timeouts[TCP_CONNTRACK_UNACK])
 		timeout = timeouts[TCP_CONNTRACK_UNACK];
-	else if (!nf_ct_tcp_no_window_check && ct->proto.tcp.last_win == 0 &&
+	else if (ct->proto.tcp.last_win == 0 &&
 		 timeouts[new_state] > timeouts[TCP_CONNTRACK_RETRANS])
 		timeout = timeouts[TCP_CONNTRACK_RETRANS];
 	else
